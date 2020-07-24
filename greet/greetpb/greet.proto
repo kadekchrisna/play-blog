@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package greet;
+option go_package = "greetpb";
+
+// Greet Unary
+message GreetRequest { string first_name = 1; }
+message GreetResponse { string greet = 1; }
+
+// Greet Stream Server
+message GreetStreamRequest { string first_name = 1; }
+message GreetStreamResponse { string greet = 1; }
+
+// Greet Stream Client
+message GreetClientStreamRequest { string first_name = 1; }
+message GreetClientStreamResponse { string greet = 1; }
+
+// Greet Stream Client & Serve
+message GreetEveryoneRequest { string first_name = 1; }
+message GreetEveryoneResponse { string greet = 1; }
+
+service GreetService {
+  rpc Greet(GreetRequest) returns (GreetResponse) {};
+
+  rpc GreetStream(GreetStreamRequest) returns (stream GreetStreamResponse) {};
+
+  rpc GreetClientStream(stream GreetClientStreamRequest)
+      returns (GreetClientStreamResponse) {};
+
+  rpc GreetEveryone(stream GreetEveryoneRequest)
+      returns (stream GreetEveryoneResponse) {};
+}
